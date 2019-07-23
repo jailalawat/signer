@@ -11,6 +11,30 @@ WS Security XML Certificate signing for Ruby
 gem install signer
 ```
 
+## Usage as per NCPI DOC
+```ruby
+private_key_file = File.join(File.dirname(__FILE__), 'private.pem')
+
+cert_file        = File.join(File.dirname(__FILE__), 'certificate.cer')
+
+input_xml_file   = File.join(File.dirname(__FILE__), 'Unsigned_file.xml')
+signer = Signer.new(File.read(input_xml_file))
+signer.cert = OpenSSL::X509::Certificate.new(File.read(cert_file))
+signer.private_key = OpenSSL::PKey::RSA.new(File.read(private_key_file), "123456")
+
+
+signer.security_node = signer.document.root
+signer.security_token_id = ""
+signer.canonicalize_algorithm = :c14n_1_0
+signer.digest_algorithm           = :sha256 # Set algorithm for node digesting
+signer.signature_digest_algorithm = :sha256 # Set algorithm for message digesting for signing
+signer.digest!(signer.document.root, :id => "", :enveloped => true)
+
+signer.sign!(:issuer_serial => true)
+signed_xml = signer.to_xml
+
+File.open("signed.xml", 'w') {|f| f.write(signed_xml) }
+```
 ## Usage
 
 ```ruby
