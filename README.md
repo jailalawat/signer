@@ -11,7 +11,7 @@ WS Security XML Certificate signing for Ruby
 gem install signer
 ```
 
-## Usage as per NCPI DOC
+## Usage as per NPCI DOC
 ```ruby
 private_key_file = File.join(File.dirname(__FILE__), 'private.pem')
 
