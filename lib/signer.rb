@@ -3,9 +3,6 @@ require "base64"
 require "digest/sha1"
 require "openssl"
 
-require "./signer/digester"
-require "./signer/version"
-
 class Signer
   attr_accessor :document, :private_key, :signature_algorithm_id, :ds_namespace_prefix, :wss
   attr_reader :cert
